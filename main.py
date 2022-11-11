@@ -78,6 +78,7 @@ def fa_view_doctors_information(doctor_id):
 
 
 
+
 @app.get("/book_appointment", tags=["Appointment"])
 def fa_book_appointment(appointment_id, doctor_id, patient_id, date, start_time, end_time, status):
     book_appointment = TubeaDbExec("appointment")
