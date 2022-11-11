@@ -1,9 +1,13 @@
 from pydantic import BaseModel, Field, EmailStr
 
-class PostSchema(BaseModel):
+class AppointmentBookSchema(BaseModel):
     _id: int = Field(default=None)
-    user_name: str = Field(...)
-    user_password: str = Field(...)
+    doctor_id: int = Field(default=None)
+    patient_id: int = Field(default=None)
+    date: datetime = Field(default=None)
+    start_time: str = Field(default=None)
+    end_time: str = Field(default=None)
+    status: str = Field(default=None)
 
 
 

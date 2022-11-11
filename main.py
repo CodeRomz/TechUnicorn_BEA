@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
 from tubea_dbcon import TubeaDbExec
 
 
@@ -69,9 +69,13 @@ def fa_view_doctors_information(doctor_id):
 
     doctor_appointment_details = view_doctor_appointments.view_appointment_byDoctorId(doctor_id)
 
+    for details in doctor_appointment_details:
+         print(details["date"])
+
+
     doctor_information = doctor_user_info + doctor_appointment_details
 
-    return doctor_information
+    return doctor_user_info
 
 
 
@@ -82,11 +86,19 @@ def fa_view_doctors_information(doctor_id):
 @app.get("/book_appointment", tags=["Appointment"])
 def fa_book_appointment(appointment_id, doctor_id, patient_id, date, start_time, end_time, status):
     book_appointment = TubeaDbExec("appointment")
+    view_doctor_appointments = TubeaDbExec("appointment")
+    doctor_appointment_details = view_doctor_appointments.view_appointment_byDoctorId(doctor_id)
 
-    book_appointment.book_appointment(appointment_id, doctor_id, patient_id, date, start_time, end_time, status)
-    return {
-        "data": "appointment added."
-    }
+    if doctor_appointment_details <= len(doctor_appointment_details):
+        book_appointment.book_appointment(appointment_id, doctor_id, patient_id, date, start_time, end_time, status)
+        return {
+            "data": "appointment added."
+        }
+    else:
+        return {
+            "doctor": doctor_id,
+            "Status": "The doctor has already have 12 patients"
+        }
 
 uvicorn.run(app, host="127.0.0.1", port=8000)
 
