@@ -1,12 +1,7 @@
-class Particle:
-   def __init__(self, name, charge):
-       self.name = name
-       self.charge = charge
+from tubea_dbcon import TubeaDbExec
 
-   def show_particle(self):
-       print(f'The particle {self.name} has a charge of {self.charge}')
+verify_user = TubeaDbExec("user")
 
+uv_value = verify_user.verify_login_data("third name")
 
-p = Particle("Muon", "-1")
-
-p.show_particle()
+print(uv_value['user_password'])

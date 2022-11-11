@@ -17,6 +17,10 @@ class TubeaDbExec:
         self.user_id = user_id
         self.view_user_data = self.collection.find_one({"_id": self.user_id})
         return self.view_user_data
+    def verify_login_data(self, user_name):
+        self.user_name = user_name
+        self.view_user_data = self.collection.find_one({"user_name": self.user_name})
+        return self.view_user_data
 
     # add/post data in mongo
     def add_data(self, user_id, user_name, user_password):
