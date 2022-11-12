@@ -53,7 +53,7 @@ class TubeaDbExec:
         }
         )
 
-    def book_appointment(self, appointment_id, doctor_id, patient_id, date, start_time, end_time, status):
+    def book_appointment(self, appointment_id, doctor_id, patient_id, date, start_time, end_time, running_time, status):
         self.collection.insert_one(
             {
                 "_id": appointment_id,
@@ -62,6 +62,7 @@ class TubeaDbExec:
                 "date": date,
                 "start_time": start_time,
                 "end_time": end_time,
+                "running_time": running_time,
                 "status": status
             }
         )
