@@ -1,3 +1,4 @@
+import pandas as pd
 import uvicorn
 from fastapi import FastAPI, Body
 from tubea_dbcon import TubeaDbExec
@@ -75,7 +76,13 @@ def fa_view_doctors_information(doctor_id):
 
     doctor_information = doctor_user_info + doctor_appointment_details
 
-    return doctor_user_info
+    df = pd.DataFrame(doctor_appointment_details)
+
+    # df2 = df.pivot(index='doctor_id', columns='date', values='status')
+
+    print(df)
+
+    return doctor_appointment_details
 
 
 
@@ -92,7 +99,8 @@ def fa_book_appointment(appointment_id, doctor_id, patient_id, date, start_time,
     if doctor_appointment_details <= len(doctor_appointment_details):
         book_appointment.book_appointment(appointment_id, doctor_id, patient_id, date, start_time, end_time, status)
         return {
-            "data": "appointment added."
+            "data": "appointment added.",
+            "reminder": "Be at the doctor's clinic 5 minutes before the scheduled appointment time"
         }
     else:
         return {
